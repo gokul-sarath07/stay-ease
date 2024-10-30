@@ -1,6 +1,7 @@
 package com.crio.stayEase.entity;
 
 import com.crio.stayEase.constants.Role;
+import com.crio.stayEase.dto.CreateUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,6 +61,18 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public boolean isCustomer() {
+        return role.equals(Role.CUSTOMER);
+    }
+
+    public boolean isManager() {
+        return role.equals(Role.HOTEL_MANAGER);
+    }
+
+    public boolean isAdmin() {
+        return role.equals(Role.ADMIN);
     }
 
     public String getFullName() {
