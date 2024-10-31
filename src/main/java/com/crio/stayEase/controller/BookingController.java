@@ -1,10 +1,12 @@
 package com.crio.stayEase.controller;
 
+import com.crio.stayEase.config.JwtUtil;
 import com.crio.stayEase.dto.RoomBooking;
 import com.crio.stayEase.entity.Booking;
 import com.crio.stayEase.service.BookingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,16 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping(ROOM_BOOKING)
-    public ResponseEntity<Booking> bookRoom(@PathVariable("hotelId") Long hotelId, @Valid @RequestBody RoomBooking roomBooking) {
-        Booking booking = bookingService.bookRoom(hotelId, roomBooking);
+    public ResponseEntity<Booking> bookRoom(@PathVariable("hotelId") Long hotelId,
+                                            @Valid @RequestBody RoomBooking roomBooking,
+                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String token = authorizationHeader.substring(7);
+        String primaryUserEmail = jwtUtil.extractUsername(token);
+        Booking booking = bookingService.bookRoom(hotelId, primaryUserEmail, roomBooking);
 
         return ResponseEntity.ok(booking);
     }

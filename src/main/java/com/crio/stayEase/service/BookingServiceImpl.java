@@ -23,9 +23,9 @@ public class BookingServiceImpl implements BookingService {
     private HotelService hotelService;
 
     @Override
-    public Booking bookRoom(Long hotelId, RoomBooking roomBooking) {
+    public Booking bookRoom(Long hotelId, String primaryEmail, RoomBooking roomBooking) {
         Hotel hotel = getHotelIfRoomAvailable(hotelId);
-        User primaryUser = userService.findByEmail(roomBooking.getPrimaryUserEmail());
+        User primaryUser = userService.findByEmail(primaryEmail);
 
         User secondaryUser = null;
         if (roomBooking.getSecondaryUserEmail() != null) {
@@ -33,6 +33,9 @@ public class BookingServiceImpl implements BookingService {
         }
 
         Booking booking = createBookingObj(hotel, primaryUser, secondaryUser);
+        hotel.bookRoom();
+
+        hotelService.saveHotel(hotel);
 
         return bookingRepository.save(booking);
     }
@@ -51,6 +54,7 @@ public class BookingServiceImpl implements BookingService {
 
         booking.setPrimaryUser(primary);
         booking.setSecondaryUser(secondary);
+        booking.setHotel(hotel);
 
         return booking;
     }
@@ -58,6 +62,10 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public String cancelBooking(Long bookingId) {
         Booking booking = findByBookingId(bookingId);
+        Hotel hotel = booking.getHotel();
+
+        hotel.cancelRoom();
+        hotelService.saveHotel(hotel);
 
         booking.cancelBooking();
         bookingRepository.save(booking);
