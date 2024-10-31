@@ -1,11 +1,13 @@
 package com.crio.stayEase.config;
 
 import com.crio.stayEase.service.CustomUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +38,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith(authenticationScheme)) {
             jwt = authorizationHeader.substring(authenticationScheme.length());
-            userEmail = jwtUtil.extractUsername(jwt);
+            try {
+                userEmail = jwtUtil.extractUsername(jwt);
+            } catch (ExpiredJwtException ex) {
+                setTokenExpirationStatus(response);
+                return;
+            }
         }
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -51,5 +58,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void setTokenExpirationStatus(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json");
+        response.getWriter().write("{\"error\": \"Token has expired. Please log in again.\"}");
+        response.getWriter().flush();
     }
 }
