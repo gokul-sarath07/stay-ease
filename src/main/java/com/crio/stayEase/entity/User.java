@@ -1,10 +1,8 @@
 package com.crio.stayEase.entity;
 
 import com.crio.stayEase.constants.Role;
-import com.crio.stayEase.dto.CreateUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +16,6 @@ import java.util.Collections;
 @Data
 @Entity
 @Table(name = "Users")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
