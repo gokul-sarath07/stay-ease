@@ -1,5 +1,6 @@
 package com.crio.stayEase.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -14,6 +15,6 @@ public class CreateHotel {
     @NotBlank(message = "Description is required")
     private String description;
 
-    @NotBlank(message = "Please mention the number of available rooms")
+    @Min(value = 1, message = "Please mention the number of available rooms")
     private int numberOfAvailableRooms;
 }
