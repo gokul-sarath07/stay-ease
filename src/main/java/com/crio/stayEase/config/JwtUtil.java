@@ -14,9 +14,9 @@ public class JwtUtil {
     // For simplicity keeping it here.
     private final String SECRET_KEY = "top_secret_key_yek_terces_pot_key_secret_top";
 
-    public String generateToken(String username) {
+    public String generateToken(String userEmail) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userEmail)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(getSecurityKey(), SignatureAlgorithm.HS256)

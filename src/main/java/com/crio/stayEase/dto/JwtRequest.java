@@ -1,5 +1,6 @@
 package com.crio.stayEase.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JwtRequest {
 
-    @NotBlank(message = "username is required")
+    @NotBlank(message = "User email is required")
+    @Email(message = "Email format is invalid.")
     private String username;
 
     @NotBlank(message = "password is required")
