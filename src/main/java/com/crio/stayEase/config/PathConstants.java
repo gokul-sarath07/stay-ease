@@ -17,6 +17,6 @@ public class PathConstants {
     // Booking Paths
     public static final String ROOM_BOOKING = BOOKING_BASE_PATH + "/hotels/{hotelId}/book";
     public static final String CANCEL_BOOKING = BOOKING_BASE_PATH + "/{bookingId}";
-    public static final String USER_BOOKINGS  =  BOOKING_BASE_PATH + "/user/{userId}";
+    public static final String USER_BOOKINGS  =  BOOKING_BASE_PATH + "/customer/{userId}";
     public static final String GET_BOOKING = BOOKING_BASE_PATH + "/{bookingId}";
 }
