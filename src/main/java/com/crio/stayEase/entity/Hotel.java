@@ -31,24 +31,43 @@ public class Hotel {
         setNumberOfAvailableRooms(createHotel.getNumberOfAvailableRooms());
     }
 
-    public Hotel(UpdateHotel updateHotel) {
-        if (updateHotel != null) {
-            if (updateHotel.getHotelName() != null) {
-                setHotelName(updateHotel.getHotelName());
-            }
-            if (updateHotel.getDescription() != null) {
-                setDescription(updateHotel.getDescription());
-            }
-            if (updateHotel.getLocation() != null) {
-                setLocation(updateHotel.getLocation());
-            }
-            if (updateHotel.getNumberOfAvailableRooms() != null) {
-                setNumberOfAvailableRooms(updateHotel.getNumberOfAvailableRooms());
-            }
+    public Hotel(UpdateHotel updateHotel, Hotel oldHotel) {
+        if (updateHotel.getHotelName() != null && !updateHotel.getHotelName().isBlank()) {
+            setHotelName(updateHotel.getHotelName());
+        } else {
+            setHotelName(oldHotel.getHotelName());
+        }
+
+        if (updateHotel.getDescription() != null && !updateHotel.getDescription().isBlank()) {
+            setDescription(updateHotel.getDescription());
+        } else {
+            setDescription(oldHotel.getDescription());
+        }
+
+        if (updateHotel.getLocation() != null && !updateHotel.getLocation().isBlank()) {
+            setLocation(updateHotel.getLocation());
+        } else {
+            setLocation(oldHotel.getLocation());
+        }
+
+        if (updateHotel.getNumberOfAvailableRooms() != null) {
+            setNumberOfAvailableRooms(updateHotel.getNumberOfAvailableRooms());
+        } else {
+            setNumberOfAvailableRooms(oldHotel.getNumberOfAvailableRooms());
         }
     }
 
     public boolean isRoomsAvailable() {
         return numberOfAvailableRooms > 0;
+    }
+
+    public void bookRoom() {
+        if (isRoomsAvailable()) {
+            numberOfAvailableRooms--;
+        }
+    }
+
+    public void cancelRoom() {
+        numberOfAvailableRooms++;
     }
 }
