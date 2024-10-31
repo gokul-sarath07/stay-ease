@@ -12,4 +12,5 @@ public interface HotelService {
     Hotel updateHotel(Long hotelId, UpdateHotel updateHotel);
     String deleteHotel(Long hotelId);
     Hotel findByHotelId(Long hotelId);
+    Hotel saveHotel(Hotel hotel);
 }

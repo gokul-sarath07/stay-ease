@@ -34,7 +34,7 @@ public class HotelServiceImpl implements HotelService {
                 .orElseThrow(() ->
                         new HotelNotFoundException("Hotel with id: " + hotelId + " does not exist."));
 
-        Hotel updatedHotel = new Hotel(updateHotel);
+        Hotel updatedHotel = new Hotel(updateHotel, hotel);
         updatedHotel.setId(hotel.getId());
 
         return hotelRepository.save(updatedHotel);
@@ -42,7 +42,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public String deleteHotel(Long hotelId) {
-        if (hotelRepository.existsById(hotelId)) {
+        if (!hotelRepository.existsById(hotelId)) {
             throw new HotelNotFoundException("Hotel with id: " + hotelId + " does not exist.");
         }
 
@@ -56,5 +56,14 @@ public class HotelServiceImpl implements HotelService {
         return hotelRepository.findById(hotelId)
                 .orElseThrow(() ->
                         new HotelNotFoundException("Hotel with id: " + hotelId + " does not exist."));
+    }
+
+    @Override
+    public Hotel saveHotel(Hotel hotel) {
+        if (hotel == null) {
+            throw new HotelNotFoundException("Hotel object is null.");
+        }
+
+        return hotelRepository.save(hotel);
     }
 }
