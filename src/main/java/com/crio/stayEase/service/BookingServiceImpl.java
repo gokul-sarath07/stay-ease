@@ -7,11 +7,13 @@ import com.crio.stayEase.entity.User;
 import com.crio.stayEase.exception.BookingNotFoundException;
 import com.crio.stayEase.exception.HotelRoomNotAvailable;
 import com.crio.stayEase.repository.BookingRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class BookingServiceImpl implements BookingService {
 
@@ -24,6 +26,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking bookRoom(Long hotelId, String primaryEmail, RoomBooking roomBooking) {
+        log.info("Entered bookRoom() method - hotelId: {}, primaryEmail: {}, roomBooking: {}", hotelId, primaryEmail, roomBooking);
         Hotel hotel = getHotelIfRoomAvailable(hotelId);
         User primaryUser = userService.findByEmail(primaryEmail);
 
@@ -41,6 +44,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private Hotel getHotelIfRoomAvailable(Long hotelId) {
+        log.info("Entered getHotelIfRomeAvailable() method - hotelId: {}", hotelId);
         Hotel hotel = hotelService.findByHotelId(hotelId);
         if (!hotel.isRoomsAvailable()) {
             throw new HotelRoomNotAvailable("No rooms are currently available for this hotel. Please try later or another hotel.");
@@ -50,6 +54,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private Booking createBookingObj(Hotel hotel, User primary, User secondary) {
+        log.info("Entered createBookingObj() method - hotel: {}, primary: {}, secondary: {}", hotel, primary, secondary);
         Booking booking = new Booking();
 
         booking.setPrimaryUser(primary);
@@ -61,6 +66,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public String cancelBooking(Long bookingId) {
+        log.info("Entered cancelBooking() - bookingId: {}", bookingId);
         Booking booking = findByBookingId(bookingId);
         Hotel hotel = booking.getHotel();
 
@@ -75,10 +81,12 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> getUserBookings(Long userId) {
+        log.info("Entered getUserBookings() method - userId: {}", userId);
         return bookingRepository.findByUserId(userId);
     }
 
     public Booking findByBookingId(Long bookingId) {
+        log.info("Entered findByBookingId method - bookingId: {}", bookingId);
         return bookingRepository.findById(bookingId)
                 .orElseThrow(() ->
                 new BookingNotFoundException("Booking with id: " + bookingId + " not found."));

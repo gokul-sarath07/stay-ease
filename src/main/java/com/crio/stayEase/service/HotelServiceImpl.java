@@ -5,11 +5,13 @@ import com.crio.stayEase.dto.UpdateHotel;
 import com.crio.stayEase.entity.Hotel;
 import com.crio.stayEase.exception.HotelNotFoundException;
 import com.crio.stayEase.repository.HotelRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class HotelServiceImpl implements HotelService {
 
@@ -18,11 +20,13 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<Hotel> getAllHotels() {
+        log.info("Entered getAllHotels() method");
         return hotelRepository.findAll();
     }
 
     @Override
     public Hotel createHotel(CreateHotel createHotel) {
+        log.info("Entered  createHotel() method - createHotel: {}", createHotel);
         Hotel hotel = new Hotel(createHotel);
 
         return hotelRepository.save(hotel);
@@ -30,6 +34,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public Hotel updateHotel(Long hotelId, UpdateHotel updateHotel) {
+        log.info("Entered updateHotel() method - hotelId: {}, updateHotel: {}", hotelId, updateHotel);
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() ->
                         new HotelNotFoundException("Hotel with id: " + hotelId + " does not exist."));
@@ -42,6 +47,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public String deleteHotel(Long hotelId) {
+        log.info("Entered deleteHotel() method - hotelId: {}", hotelId);
         if (!hotelRepository.existsById(hotelId)) {
             throw new HotelNotFoundException("Hotel with id: " + hotelId + " does not exist.");
         }
@@ -53,6 +59,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public Hotel findByHotelId(Long hotelId) {
+        log.info("Entered findByHotelId() method - hotelId: {}", hotelId);
         return hotelRepository.findById(hotelId)
                 .orElseThrow(() ->
                         new HotelNotFoundException("Hotel with id: " + hotelId + " does not exist."));
@@ -60,6 +67,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public Hotel saveHotel(Hotel hotel) {
+        log.info("Entered saveHotel() method - hotel: {}", hotel);
         if (hotel == null) {
             throw new HotelNotFoundException("Hotel object is null.");
         }

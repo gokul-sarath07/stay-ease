@@ -6,10 +6,12 @@ import com.crio.stayEase.entity.User;
 import com.crio.stayEase.exception.RoleNotFoundException;
 import com.crio.stayEase.exception.UserNotFoundException;
 import com.crio.stayEase.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -20,12 +22,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(CreateUser createUser) {
+        log.info("Entered registerUser() method - createUser: {}", createUser);
         User user = createUserObj(createUser);
 
         return userRepository.save(user);
     }
 
     private User createUserObj(CreateUser createUser) {
+        log.info("Entered createUserObj() method - createUser: {}", createUser);
         User user = new User();
 
         user.setFirstName(createUser.getFirstName());
@@ -38,6 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setUserRole(User user, String role) {
+        log.info("Entered setUserRole() method - user: {}, role: {}", user, role);
         if (role == null || role.equalsIgnoreCase(Role.CUSTOMER.toString())) {
             user.setRole(Role.CUSTOMER);
         } else if (role.equalsIgnoreCase(Role.HOTEL_MANAGER.toString())) {
@@ -51,6 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
+        log.info("Entered findByEmail() method - email: {}", email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UserNotFoundException("User with email " + email + " does not exist."));
@@ -58,6 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
+        log.info("Entered saveUser() method - user: {}", user);
         if (user == null) {
             throw new UserNotFoundException("User object is null.");
         }
