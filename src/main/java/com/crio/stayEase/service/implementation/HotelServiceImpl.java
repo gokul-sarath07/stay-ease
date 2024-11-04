@@ -1,10 +1,11 @@
-package com.crio.stayEase.service;
+package com.crio.stayEase.service.implementation;
 
 import com.crio.stayEase.dto.CreateHotel;
 import com.crio.stayEase.dto.UpdateHotel;
 import com.crio.stayEase.entity.Hotel;
 import com.crio.stayEase.exception.HotelNotFoundException;
 import com.crio.stayEase.repository.HotelRepository;
+import com.crio.stayEase.service.HotelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

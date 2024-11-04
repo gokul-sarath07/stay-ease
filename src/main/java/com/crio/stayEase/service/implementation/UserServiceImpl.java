@@ -1,4 +1,4 @@
-package com.crio.stayEase.service;
+package com.crio.stayEase.service.implementation;
 
 import com.crio.stayEase.constants.Role;
 import com.crio.stayEase.dto.CreateUser;
@@ -6,6 +6,7 @@ import com.crio.stayEase.entity.User;
 import com.crio.stayEase.exception.RoleNotFoundException;
 import com.crio.stayEase.exception.UserNotFoundException;
 import com.crio.stayEase.repository.UserRepository;
+import com.crio.stayEase.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
