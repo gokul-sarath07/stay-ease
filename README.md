@@ -69,7 +69,14 @@ This is a simplified online room booking system focusing on core functionalities
 
 ## Running the Application
 
-### Steps to Build & Run
+### Live
+
+- The application is live and accessible at [https://stay-ease-6m1p.onrender.com](https://stay-ease-6m1p.onrender.com).
+-  Use the provided Postman collection to interact with the API.
+
+### Local
+
+#### Steps to Build & Run
 
 1. **Clone the Repository**: Clone the repository to your local machine.
     ```bash
@@ -80,13 +87,15 @@ This is a simplified online room booking system focusing on core functionalities
 2. **Configure the Database**:
     - Update the `application.properties` or `application.yml` file with your MySQL database credentials.
 
+
 3. **Build the Project**:
     - Using Gradle:
-      ```bash
-      ./gradlew build
-      ```
+    ```bash
+    ./gradlew build
+    ```
 
 4. **Run the Application**:
-   After building the project, run the JAR file:
+    - After building the project, run the JAR file:
    ```bash
    java -jar build/libs/stayEase-0.0.1-SNAPSHOT.jar
+   ```
