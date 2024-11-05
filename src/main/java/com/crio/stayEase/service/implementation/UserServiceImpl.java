@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User createUserObj(CreateUser createUser) {
-        log.info("Entered createUserObj() method - createUser: {}", createUser);
+        log.info("Entered createUserObj() method - createUser email: {}", createUser.getEmail());
         User user = new User();
 
         user.setFirstName(createUser.getFirstName());
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setUserRole(User user, String role) {
-        log.info("Entered setUserRole() method - user: {}, role: {}", user, role);
+        log.info("Entered setUserRole() method - user email: {}, role: {}", user.getEmail(), role);
         if (role == null || role.equalsIgnoreCase(Role.CUSTOMER.toString())) {
             user.setRole(Role.CUSTOMER);
         } else if (role.equalsIgnoreCase(Role.HOTEL_MANAGER.toString())) {
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        log.info("Entered saveUser() method - user: {}", user);
+        log.info("Entered saveUser() method - user email: {}", user.getEmail());
         if (user == null) {
             throw new UserNotFoundException("User object is null.");
         }

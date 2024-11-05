@@ -57,7 +57,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private Booking createBookingObj(Hotel hotel, User primary, User secondary) {
-        log.info("Entered createBookingObj() method - hotel: {}, primary: {}, secondary: {}", hotel, primary, secondary);
+        log.info("Entered createBookingObj() method - hotel: {}, primaryEmail: {}, secondaryEmail: {}", hotel, primary.getEmail(), secondary.getEmail());
         Booking booking = new Booking();
 
         booking.setPrimaryUser(primary);
